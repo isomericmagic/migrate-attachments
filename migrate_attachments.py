@@ -1,12 +1,22 @@
-#migrate attachments.py
+# Confluence Attachment Migration Script - Brian Johnson [Atlassian]
 
 import csv
 import os
 import shutil
 
+# Set this flag to y if you are running this on Windows
+windows = 'n'
+
 old_attachment_folder_path = '/Users/bjohnson3/Documents/attachments/ver003'
 new_attachment_folder_path = '/Users/bjohnson3/Desktop/new attachments'
 csv_file_name_and_path = 'Test1.csv'
+file_path_delimiter = '/'
+
+if windows.lower() == 'y':
+  file_path_delimiter = '\\'
+  print("Running on Windows...")
+else:
+  print("Running on Linux...")
 
 def create_path_1(id):
 	id_1 = id[-3:]
@@ -45,12 +55,12 @@ with open(csv_file_name_and_path) as csv_file:
 			new_file_path_5 = create_path_2(row[4])
 			old_file_path_6 = row[1]
 			new_file_path_6 = row[4]
-			old_file_path_7 = row[2]
+			old_file_path_7 = row[2]		
 			new_file_path_7 = row[5]
-			old_attachment_path = old_attachment_folder_path + '/' + old_file_path + '/' + old_file_path_2 + '/' + old_file_path_3 + '/' + old_file_path_4\
-				+ '/' + old_file_path_5 + '/' + old_file_path_6 + '/' + old_file_path_7
-			new_attachment_path = new_attachment_folder_path + '/' + new_file_path + '/' + new_file_path_2 + '/' + new_file_path_3 + '/' + new_file_path_4\
-				+ '/' + new_file_path_5 + '/' + new_file_path_6 + '/' + new_file_path_7
+			old_attachment_path = old_attachment_folder_path + file_path_delimiter + old_file_path + file_path_delimiter + old_file_path_2 + file_path_delimiter + old_file_path_3 + file_path_delimiter + old_file_path_4\
+				+ file_path_delimiter + old_file_path_5 + file_path_delimiter + old_file_path_6 + file_path_delimiter + old_file_path_7
+			new_attachment_path = new_attachment_folder_path + file_path_delimiter + new_file_path + file_path_delimiter + new_file_path_2 + file_path_delimiter + new_file_path_3 + file_path_delimiter + new_file_path_4\
+				+ file_path_delimiter + new_file_path_5 + file_path_delimiter + new_file_path_6 + file_path_delimiter + new_file_path_7
 			try:
 				os.makedirs(new_attachment_path)
 			except OSError:
